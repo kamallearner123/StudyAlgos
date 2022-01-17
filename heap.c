@@ -1,8 +1,14 @@
 #include <stdio.h>
 #define MAX 100
 #define swap(a,b) {
-int tail = 0;
-int arra[MAX];
+
+
+struct data {
+	int priority;
+	char name[100];
+};
+
+struct data *gArray;
 
 void insert(int a)
 {
@@ -67,19 +73,22 @@ int pop()
 
 }
 
+
+
 int main()
 {
-	int data = 0;
-
 	int max;
-	printf("How many ?");
+	printf("How many entries ?");
 	scanf("%d", &max);
+
+	gArray = malloc(sizeof(struct data));
 	for (int i=0; i<max; i++)
 	{
-		scanf("%d",&data);
-		insert(data);
-	}
-
-	print_array();
-		
+		struct data *new = malloc(sizeof(struct data);)
+		printf("Enter the priority");
+		scanf("%d",new->priority);
+		printf("Enter the name ");
+		scanf("%s", new->name);
+		insert(new);
+	}		
 }
