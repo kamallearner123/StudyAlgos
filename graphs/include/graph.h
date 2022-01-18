@@ -26,4 +26,6 @@ typedef struct _node {
 Hash function to find the index
 */
 
- erronum init_graph(unsigned int(*hash_function) (void *), compare_result (*compare_fun)(void *, void *));
+erronum init_graph(unsigned int(*hash_function) (void *), compare_result (*compare_fun)(void *, void *));
+
+erronum insert_node (void *node);

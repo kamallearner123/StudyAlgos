@@ -30,4 +30,6 @@ unsigned int person_hash_function (void *ptr) {
 int main()
 {
     printf("Init = %u\n", init_graph(person_hash_function, compare_fun));
+    struct person *kamal = malloc(sizeof(struct person));
+    printf("Insert node result = %d\n", insert_node((void *)kamal));
 }
