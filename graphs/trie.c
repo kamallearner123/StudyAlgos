@@ -1,16 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 struct node {
-    char flag; //1 or 0
     struct node *list[26];
+    char *name;
 };
 
 struct node *head;
 
 
-void insert (char *name) {
+void insert (char *iname) {
     struct node *tmp = head;
+    char *name = iname;
 
     //traverse for each letter//
     while (*name) { //"kamal" = 'k', 'a', 'm', a , l
@@ -23,12 +25,12 @@ void insert (char *name) {
         name++;
     }
 
-    if (tmp->flag == 1) {
+    if (tmp->name != NULL) {
         printf("Inserting duplicate name\n");
         return;
     }
 
-    tmp->flag = 1;
+    tmp->name =  strndup(iname, 100);
 }
 
 int search(char *name) {
@@ -41,13 +43,26 @@ int search(char *name) {
         name++;
     }
 
-    if (tmp->flag != 1) {
+    if (tmp->name == NULL) {
         return 0;
     }
     else {
         return 1;
     }
 }
+
+void display_all(struct node *root) {
+
+    if (root->name != NULL) {
+        printf("Name -> %s\n", root->name);
+    }
+    for  (int i=0; i<26; i++) {
+        if (root->list[i] != NULL) {
+            display_all(root->list[i]);
+        }
+    }
+}
+
 
 int main()
 {
@@ -60,5 +75,7 @@ int main()
 
     printf("Search result = %d\n", search("kamal"));
     printf("Search result = %d\n", search("kishore"));
+
+    display_all(head);
 }
 
