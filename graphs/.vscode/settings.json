@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "graph.h": "c",
+        "stdio.h": "c",
+        "trie.h": "c",
+        "stdlib.h": "c",
+        "string.h": "c",
+        "typeinfo": "c"
+    }
+}

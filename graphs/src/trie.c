@@ -1,16 +1,10 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "trie.h"
 
-struct node {
-    struct node *list[26];
-    char *name;
-};
+struct node g_head;
 
-struct node *head;
+struct node *head = &g_head;
 
-
-void insert (char *iname) {
+int insert (char *iname) {
     struct node *tmp = head;
     char *name = iname;
 
@@ -27,10 +21,11 @@ void insert (char *iname) {
 
     if (tmp->name != NULL) {
         printf("Inserting duplicate name\n");
-        return;
+        return -1;
     }
 
     tmp->name =  strndup(iname, 100);
+    return 0;
 }
 
 int search(char *name) {
@@ -51,8 +46,25 @@ int search(char *name) {
     }
 }
 
+
 void display_all(struct node *root) {
 
+    //Print if valid name is there in node.
+    /*
+                --------------------------------
+                root->name = null
+                --------------------------------
+                k (null)
+                |
+                a (null)  i(null)
+                |           |
+                m (null)    
+                |
+                a (null)
+                |
+                l  (kamal)
+
+    */
     if (root->name != NULL) {
         printf("Name -> %s\n", root->name);
     }
@@ -63,8 +75,11 @@ void display_all(struct node *root) {
     }
 }
 
+void display_all_nodes(void) {
+    display_all(head);
+}
 
-int main()
+int test_trie()
 {
     head = calloc(1, sizeof(struct node));
 
@@ -73,9 +88,12 @@ int main()
     insert("kamal");
     insert("kiran");
 
+    insert("anil");
+    insert("sunil");
+
     printf("Search result = %d\n", search("kamal"));
     printf("Search result = %d\n", search("kishore"));
 
-    display_all(head);
+    display_all_nodes();
 }
 
