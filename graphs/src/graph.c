@@ -49,6 +49,7 @@ erronum add_account (char *name) {
 
 
 erronum delete_account (char *name) {
+    delete_node(name);
     return GRAPH_SUCCESS;
 }
 
@@ -78,4 +79,3 @@ erronum serach_account(char *name) {
     search(name);
     return GRAPH_SUCCESS;
 }
-

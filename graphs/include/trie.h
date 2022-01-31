@@ -10,5 +10,6 @@
 int insert (char *iname);
 int search(char *name);
 void display_all_nodes(void);
+int delete_node(char *name);
 
 #endif //TRIE_H

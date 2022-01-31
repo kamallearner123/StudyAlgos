@@ -4,6 +4,18 @@ struct node g_head;
 
 struct node *head = &g_head;
 
+
+void inc_ref_count(char *name) {
+    struct node *tmp = head;
+    while (*name) {
+        tmp->ref_count ++; //Incrementing ref count for the node.
+        printf("Increasing ref count for %c\n", *name);
+        tmp = tmp->list[*name-97];
+        name++;
+    }
+}
+
+
 int insert (char *iname) {
     struct node *tmp = head;
     char *name = iname;
@@ -25,6 +37,8 @@ int insert (char *iname) {
     }
 
     tmp->name =  strndup(iname, 100);
+    inc_ref_count(iname);
+
     return 0;
 }
 
@@ -79,6 +93,22 @@ void display_all_nodes(void) {
     display_all(head);
 }
 
+int delete_node(char *name) {
+
+    struct node *tmp = head; 
+    while (*name) {
+        if (tmp == NULL) {
+            printf("Delete : No name found\n");
+            return 0; //Breaking in between
+        }
+        tmp = tmp->list[*name-97];
+        name++;
+    }
+
+    tmp
+
+}
+
 int test_trie()
 {
     head = calloc(1, sizeof(struct node));
@@ -95,5 +125,6 @@ int test_trie()
     printf("Search result = %d\n", search("kishore"));
 
     display_all_nodes();
+    return 0;
 }
 
