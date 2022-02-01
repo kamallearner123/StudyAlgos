@@ -76,6 +76,9 @@ erronum display_all_accounts (void) {
 
 
 erronum serach_account(char *name) {
-    search(name);
-    return GRAPH_SUCCESS;
+    if (1 == search(name)) {
+        return GRAPH_FAIL;
+    } else {
+        return GRAPH_SUCCESS;
+    }
 }

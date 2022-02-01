@@ -26,7 +26,7 @@ int insert (char *iname) {
             printf("Allocating memory for %c\n", *name);
             tmp->list[*name-97] = calloc(1, sizeof(struct node));
         }
-
+        tmp->ref_count++;
         tmp = tmp->list[*name-97];
         name++;
     }
@@ -37,7 +37,7 @@ int insert (char *iname) {
     }
 
     tmp->name =  strndup(iname, 100);
-    inc_ref_count(iname);
+    tmp->ref_count++;
 
     return 0;
 }
@@ -52,8 +52,12 @@ int search(char *name) {
         name++;
     }
 
+    if (tmp == NULL) {
+        return 0; //FAILED
+    }
+
     if (tmp->name == NULL) {
-        return 0;
+        return 0; //FAILED
     }
     else {
         return 1;
@@ -93,19 +97,46 @@ void display_all_nodes(void) {
     display_all(head);
 }
 
-int delete_node(char *name) {
+int delete_node(char *iname) {
+    char *name = iname;
+    struct node *nextEntry = head;
+    struct node *tmp=NULL; 
 
-    struct node *tmp = head; 
+    if (search(name)==0) {
+        printf("%s: Name = %s : Failed to find\n", __FUNCTION__, iname);
+        return 0;
+    }
     while (*name) {
-        if (tmp == NULL) {
+        tmp = nextEntry;
+        nextEntry = tmp->list[*name-97];
+        if (nextEntry == NULL) {
             printf("Delete : No name found\n");
             return 0; //Breaking in between
         }
-        tmp = tmp->list[*name-97];
+
+        if ((tmp->ref_count == 1) 
+         && (tmp != head)) {
+            free(tmp);
+        }
+        else {
+            tmp->ref_count--;
+        }
         name++;
     }
 
-    tmp
+    if (0 == strncmp(iname, nextEntry->name, strlen(name))) {
+        if (nextEntry->ref_count == 1) {
+            free(nextEntry);
+            return 1;
+        } else {
+            nextEntry->ref_count--;
+            free(nextEntry->name);
+            nextEntry->name = NULL;
+            return 1;
+        }
+    }
+
+    return 0;
 
 }
 
@@ -123,6 +154,7 @@ int test_trie()
 
     printf("Search result = %d\n", search("kamal"));
     printf("Search result = %d\n", search("kishore"));
+    printf("Search result = %d\n", search("kama"));
 
     display_all_nodes();
     return 0;
