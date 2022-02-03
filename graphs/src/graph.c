@@ -53,7 +53,35 @@ erronum delete_account (char *name) {
     return GRAPH_SUCCESS;
 }
 
-erronum add_friend (char *name) {
+erronum add_friend (char *name, char *friend) {
+    int offset = 0;
+    //Get account using name
+    struct node *entry, *friend_entry;
+    entry = search(name);
+    if (NULL==entry) {
+        return GRAPH_FAIL;
+    }
+
+    // Check friend and add name.
+    friend_entry = search(friend);
+    if (NULL==friend_entry) {
+        return GRAPH_FAIL;
+    }
+
+    for(offset = 0; offset<MAX_FRIENDS; offset++) {
+        if (entry->friends[offset]==NULL) {
+            break;
+        }
+    }
+
+    if (offset>=MAX_FRIENDS) {
+        printf("Friends list is already FULL\n");
+        return GRAPH_FAIL;
+    }
+
+    //Adding friend name at offset//
+    entry->friends[offset] = strdup(friend);
+
     return GRAPH_SUCCESS;
 }
 
@@ -74,9 +102,28 @@ erronum display_all_accounts (void) {
     return GRAPH_SUCCESS;
 }
 
+erronum display_all_friends (char *name) {
+        //Get account using name
+    struct node *entry;
+    entry = search(name);
+    if (NULL==entry) {
+        return GRAPH_FAIL;
+    }
+
+    for (int offset=0; offset<MAX_FRIENDS; offset++) {
+        if (entry->friends[offset] != NULL) {
+            printf("%s:Friend name: %s\n", __FUNCTION__, entry->friends[offset]);
+        }
+    }
+    printf("End of friends list\n");
+    return GRAPH_SUCCESS;
+}
+
 
 erronum serach_account(char *name) {
-    if (1 == search(name)) {
+    struct node *entry;
+    entry = search(name);
+    if (NULL==entry) {
         return GRAPH_FAIL;
     } else {
         return GRAPH_SUCCESS;

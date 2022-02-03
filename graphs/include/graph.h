@@ -20,7 +20,7 @@ typedef enum _erronum {
 struct node {
     char *name;
     int ref_count;
-    struct node *friends[MAX_FRIENDS];
+    char *friends[MAX_FRIENDS];
     struct node *list[26];
 };
 
@@ -28,7 +28,7 @@ erronum add_account (char *name);
 
 erronum delete_account (char *name) ;
 
-erronum add_friend (char *name);
+erronum add_friend (char *name, char *friend);
 
 erronum find_friend (char *name, char *friend);
 
@@ -39,4 +39,6 @@ erronum delete_friend (char *name, char *friend);
 erronum display_all_accounts (void);
 
 erronum serach_account(char *name);
+
+erronum display_all_friends (char *name) ;
 #endif

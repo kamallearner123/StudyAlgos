@@ -42,7 +42,7 @@ int insert (char *iname) {
     return 0;
 }
 
-int search(char *name) {
+struct node * search(char *name) {
     struct node *tmp = head;
     while (*name) {
         if (tmp == NULL) {
@@ -53,14 +53,14 @@ int search(char *name) {
     }
 
     if (tmp == NULL) {
-        return 0; //FAILED
+        return NULL; //FAILED
     }
 
     if (tmp->name == NULL) {
-        return 0; //FAILED
+        return NULL; //FAILED
     }
     else {
-        return 1;
+        return tmp;
     }
 }
 
@@ -152,9 +152,9 @@ int test_trie()
     insert("anil");
     insert("sunil");
 
-    printf("Search result = %d\n", search("kamal"));
-    printf("Search result = %d\n", search("kishore"));
-    printf("Search result = %d\n", search("kama"));
+    printf("Search result = %p\n", search("kamal"));
+    printf("Search result = %p\n", search("kishore"));
+    printf("Search result = %p\n", search("kama"));
 
     display_all_nodes();
     return 0;
