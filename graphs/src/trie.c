@@ -18,22 +18,23 @@ void inc_ref_count(char *name) {
 
 int insert (char *iname) {
     struct node *tmp = head;
-    char *name = iname;
+    char *name;
+    name = iname;
+
+    if (search(name) != NULL) {
+        printf("%s: Name = %s : Duplicate insertion\n", __FUNCTION__, iname);
+        return 0;
+    }
 
     //traverse for each letter//
     while (*name) { //"kamal" = 'k', 'a', 'm', a , l
-        if (tmp->list[*name-97] == NULL) {
+        if (tmp->list[*name-97] == NULL) { //Check node for current letter is created or not
             printf("Allocating memory for %c\n", *name);
             tmp->list[*name-97] = calloc(1, sizeof(struct node));
         }
         tmp->ref_count++;
         tmp = tmp->list[*name-97];
         name++;
-    }
-
-    if (tmp->name != NULL) {
-        printf("Inserting duplicate name\n");
-        return -1;
     }
 
     tmp->name =  strndup(iname, 100);

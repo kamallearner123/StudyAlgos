@@ -11,11 +11,11 @@ LIBS=-lm
 _DEPS = graph.h trie.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
-_OBJ = graph.o  trie.o main.o
+_OBJ = graph.o trie.o main.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 %.o: %.c $(DEPS)
-	$(CC) -c -o $@ $< $(CFLAGS)
+	$(CC) -c -o $@ $< $(CFLAGS) $(LIBS)
 
 facebook: $(OBJ)
 	$(CC) -o $@ $^ $(CFLAGS)
