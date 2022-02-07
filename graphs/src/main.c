@@ -25,6 +25,12 @@ int main()
     add_friend("kamal", "rinku");
     add_friend("kamal", "dhana");
     add_friend("kamal", "dhana");
+
+    add_account("vamsi");
+    add_friend("vamsi","kamal");
+    add_friend("kamal","vamsi");
+
+
     display_all_friends ("kamal");
 
 }

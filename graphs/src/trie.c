@@ -67,23 +67,6 @@ struct node * search(char *name) {
 
 
 void display_all(struct node *root) {
-
-    //Print if valid name is there in node.
-    /*
-                --------------------------------
-                root->name = null
-                --------------------------------
-                k (null)
-                |
-                a (null)  i(null)
-                |           |
-                m (null)    
-                |
-                a (null)
-                |
-                l  (kamal)
-
-    */
     if (root->name != NULL) {
         printf("Name -> %s\n", root->name);
     }

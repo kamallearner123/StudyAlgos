@@ -53,6 +53,12 @@ erronum delete_account (char *name) {
     return GRAPH_SUCCESS;
 }
 
+/*
+TODO:
+1) 'name' has to send friend request to 'friend'.
+2) 'name' should be added to requesting friends likst in 'friend'
+3) 'friends' should be added to pending for acceptance list in 'name'
+*/
 erronum add_friend (char *name, char *friend) {
     int offset = 0;
     //Get account using name
@@ -89,7 +95,30 @@ erronum find_friend (char *name, char *friend) {
     return GRAPH_SUCCESS;
 }
 
+
+handleQ(char *name) {
+    // Get Q from name (vamsi)
+    //0) If Q is empty: return.
+    //1) Get first entry 
+    //2) Compare, if entry is not there in name's list, pint
+    //3) Add entry's freinds in Q
+    //4) Delete entry.
+    //5) call handleQ(name);
+}
+
 erronum suggest_friend(char *name) {
+    //Get account using name
+    struct node *entry, *friend_entry;
+    entry = search(name);
+    if (NULL==entry) {
+        printf("Account is not existing\n");
+        return GRAPH_FAIL;
+    }
+
+    // Go to each friend and get new list from friend. new 10 suggestions
+    // BFS 1, 2,3:  DFS--- vamsi->kamal->nagesh->0
+    //1) add all friends in Q (kamal -> kiran->nag->vishnu)
+    handleQ(name);
     return GRAPH_SUCCESS;
 }
 
