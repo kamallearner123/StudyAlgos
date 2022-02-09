@@ -81,43 +81,58 @@ void display_all_nodes(void) {
     display_all(head);
 }
 
+
+static void delete_friends_list(struct node *account) {
+    for (int i=0; i<MAX_FRIENDS; i++) {
+        if (account->friends[i] != NULL) {
+            free(account->friends[i]);
+        }
+    }
+}
+
+
 int delete_node(char *iname) {
     char *name = iname;
-    struct node *nextEntry = head;
-    struct node *tmp=NULL; 
+    struct node *curr = head;
+    struct node *prev = NULL; 
 
     if (search(name)==0) {
         printf("%s: Name = %s : Failed to find\n", __FUNCTION__, iname);
         return 0;
     }
     while (*name) {
-        tmp = nextEntry;
-        nextEntry = tmp->list[*name-97];
-        if (nextEntry == NULL) {
+        prev = curr;
+        curr = prev->list[*name-97];
+        if (curr == NULL) {
             printf("Delete : No name found\n");
             return 0; //Breaking in between
         }
 
-        if ((tmp->ref_count == 1) 
-         && (tmp != head)) {
-            free(tmp);
+        if ((prev->ref_count == 1) 
+         && (prev != head)) {
+            free(prev);
         }
         else {
-            tmp->ref_count--;
+            prev->ref_count--;
         }
         name++;
     }
 
-    if (0 == strncmp(iname, nextEntry->name, strlen(name))) {
-        if (nextEntry->ref_count == 1) {
-            free(nextEntry);
+    //curr points to the node which has to be deleted. 
+    //If curr is not leaf node then delete just name.
+    if (0 == strncmp(iname, curr->name, strlen(name))) {
+        delete_friends_list(curr);
+        free(curr->name);
+        if (curr->ref_count == 1) {
+            free(curr);
             return 1;
         } else {
-            nextEntry->ref_count--;
-            free(nextEntry->name);
-            nextEntry->name = NULL;
+            curr->ref_count--;
+            curr->name = NULL;
             return 1;
         }
+    } else {
+        assert(0);
     }
 
     return 0;

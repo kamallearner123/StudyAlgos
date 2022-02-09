@@ -1,7 +1,7 @@
 
 
 #include "graph.h"
-
+#include "qstack.h"
 
 /*
 Endd application:
@@ -10,6 +10,7 @@ Using graph.c/graph.h
 
 int main()
 {
+    initQ();
     //1) Creating accounts//
     add_account("kamal");
     add_account("kiran");
@@ -29,6 +30,8 @@ int main()
     add_account("vamsi");
     add_friend("vamsi","kamal");
     add_friend("kamal","vamsi");
+
+    suggest_friend("vamsi");
 
 
     display_all_friends ("kamal");

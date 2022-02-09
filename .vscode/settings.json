@@ -1,6 +1,8 @@
 {
     "files.associations": {
         "graph.h": "c",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "cstdlib": "c",
+        "typeinfo": "c"
     }
 }
