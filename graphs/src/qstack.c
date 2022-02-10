@@ -23,10 +23,13 @@ static struct Queue *rearQ = NULL;
 
 void InsertInQ(void *data) {
     if (rearQ == NULL) {
-        rearQ = calloc(1, sizeof(struct Queue));
+        rearQ = calloc(1, sizeof(struct Queue));//4000
+        rearQ->next = NULL;
+        frontQ = rearQ;//frontQ = 4000
     } else {
-        rearQ->next = calloc(1, sizeof(struct Queue));
-        rearQ = rearQ->next;
+        rearQ->next = calloc(1, sizeof(struct Queue));//4000->next = 5000
+        rearQ = rearQ->next;//rearQ = 5000
+        rearQ->next = NULL;
     }
 
     rearQ->data = data;
@@ -37,14 +40,17 @@ void InsertInQ(void *data) {
 void * GetFromQ() {
     void *data;
     struct Queue *tmp;
-    if (frontQ == rearQ) {
+    if (frontQ == NULL) {
         printf("###Empty Q\n");
         return NULL;
     } else {
+        tmp = frontQ; //tmp -> 4000: tmp = 5000
         data = frontQ->data;
-        tmp = frontQ;
-        frontQ = frontQ->next;
-        free(tmp);
+        frontQ = frontQ->next;//frontQ = 5000: from! = NULL
+        free(tmp); //free 4000
+        if (frontQ == NULL) {
+            rearQ = NULL;
+        }
     }
     return data;
 }

@@ -5,4 +5,9 @@ struct Queue {
     struct Queue *next;
 };
 
+struct Stack {
+    void *data;
+    struct Stack *next;
+};
+
 void initQ(void);
