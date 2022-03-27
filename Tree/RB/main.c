@@ -9,5 +9,9 @@ int main()
         rb_insert(num);
         count--;
     }
+        rb_displayall();
+
+    printf("ret = %d\n", rb_delete(9));
+    printf("ret = %d\n", rb_delete(45));
     rb_displayall();
 }

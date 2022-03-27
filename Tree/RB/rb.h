@@ -11,4 +11,5 @@ struct RBNode {
 
 void rb_insert(int);
 void rb_displayall(void);
+int rb_delete(int);
 

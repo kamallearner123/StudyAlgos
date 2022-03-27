@@ -19,18 +19,65 @@ void rb_insert(int num) {
     curr = &root;
     while(*curr) {
         if (new->key > (*curr)->key) {
-            curr = &((*curr)->right);
+            curr = RIGHT_REF(curr);
         } else {
-            curr = &((*curr)->left);
+            curr = LEFT_REF(curr);
         }
     }
 
-    if (root == NULL)
+    if ( (root == NULL))
         new->black = true; //1. Root should be black
 
     *curr = new;
 
     return;
+}
+
+
+#define LEFT_REF(node) &((*(node))->left)
+#define RIGHT_REF(node) &((*(node))->right)
+
+#define LEFT(node) (*(node))->left
+#define RIGHT(node) (*(node))->right
+
+struct RBNode ** find_node_ref(int data) {
+    struct RBNode **tmp = &root;
+
+    while (((*tmp) != NULL) && ((*tmp)->key != data)) {
+        if (data >(*tmp)->key) 
+            tmp = RIGHT_REF(tmp);
+        else 
+            tmp = LEFT_REF(tmp);
+    }
+
+    return tmp;
+} 
+
+
+int rb_delete(int num) {
+//1) Find the node
+    struct RBNode **mynode = find_node_ref(num);
+    struct RBNode *left;
+
+    if (*mynode == NULL)
+        return -1;
+
+//2) Adjust the children of the node 
+//      - Link should not break
+    if ((*mynode)->right == NULL) {
+        *mynode = LEFT(mynode);
+    } else {
+        left = LEFT(mynode);
+        while ((*mynode)->left != NULL) {
+            mynode = LEFT_REF(mynode);
+        }
+        (*mynode)->left = left;
+    }
+
+//3) Delete the node 
+    
+    free(*mynode);
+    return 0;
 }
 
 void display(struct RBNode *node) {
@@ -45,6 +92,9 @@ void display(struct RBNode *node) {
 }
 
 void rb_displayall(void) {
+    if (root == NULL) {
+        printf("root is NULL\n");
+    }
     display(root);
     return;
 }

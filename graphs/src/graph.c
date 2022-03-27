@@ -1,6 +1,6 @@
 #include "graph.h"
 #include "trie.h"
-
+#include "qstack.h"
 
 //Size of hash array
 // #define HASH_SIZE 100
@@ -91,20 +91,49 @@ erronum add_friend (char *name, char *friend) {
     return GRAPH_SUCCESS;
 }
 
+
 erronum find_friend (char *name, char *friend) {
-    return GRAPH_SUCCESS;
+
+    struct node *entry, *friend_entry;
+    entry = search(name);
+    if (NULL==entry) {
+        printf("Account is not existing\n");
+        return GRAPH_FAIL;
+    }
+
+    InsertInQ((void*)entry);
+
+    while(1) {
+        // Get node name from Q
+        entry = (struct node *)GetFromQ();
+        if (entry == NULL) {
+            // Q is empty: Exit
+            printf("Q is empty!!!!");
+            return -1;
+        }
+        
+        // Check entry in traversed list
+            // if yes, coninue
+        // Make entry in traversed list
+           //
+        // Check: node->name == friend //
+            // if yes, return True: Exit
+        // else, add all friends of node to Q
+    }
+
+    destroyQ();
 }
 
 
-handleQ(char *name) {
-    // Get Q from name (vamsi)
-    //0) If Q is empty: return.
-    //1) Get first entry 
-    //2) Compare, if entry is not there in name's list, pint
-    //3) Add entry's freinds in Q
-    //4) Delete entry.
-    //5) call handleQ(name);
-}
+// handleQ(char *name) {
+//     // Get Q from name (vamsi)
+//     //0) If Q is empty: return.
+//     //1) Get first entry 
+//     //2) Compare, if entry is not there in name's list, pint
+//     //3) Add entry's freinds in Q
+//     //4) Delete entry.
+//     //5) call handleQ(name);
+// }
 
 erronum suggest_friend(char *name) {
     //Get account using name
@@ -115,10 +144,11 @@ erronum suggest_friend(char *name) {
         return GRAPH_FAIL;
     }
 
+
     // Go to each friend and get new list from friend. new 10 suggestions
     // BFS 1, 2,3:  DFS--- vamsi->kamal->nagesh->0
     //1) add all friends in Q (kamal -> kiran->nag->vishnu)
-    handleQ(name);
+    //handleQ(name);
     return GRAPH_SUCCESS;
 }
 

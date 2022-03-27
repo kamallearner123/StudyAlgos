@@ -1,12 +1,31 @@
 #include "trie.h"
-
+#define MAX_NUM_OF_TRIE 10
 struct node g_head;
+struct node *ga_head[MAX_NUM_OF_TRIE];
+int gtop = -1;
 
 struct node *head = &g_head;
 
+int init_trietree() {
+    gtop++;
+    int i;
+    //Search for NULL entry//
+    for (i=0; i<MAX_NUM_OF_TRIE; i++) {
+        if (ga_head[i] == NULL) {
+            return gtop;
+        }
+    }
 
-void inc_ref_count(char *name) {
-    struct node *tmp = head;
+    return -1;
+}
+
+void destroy_trietree(int index)
+{
+    ga_head[index] = NULL;
+}
+
+void inc_ref_count(int index, char *name) {
+    struct node *tmp = ga_head[index];
     while (*name) {
         tmp->ref_count ++; //Incrementing ref count for the node.
         printf("Increasing ref count for %c\n", *name);

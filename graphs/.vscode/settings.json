@@ -5,6 +5,7 @@
         "trie.h": "c",
         "stdlib.h": "c",
         "string.h": "c",
-        "typeinfo": "c"
+        "typeinfo": "c",
+        "qstack.h": "c"
     }
 }

@@ -10,7 +10,6 @@ Using graph.c/graph.h
 
 int main()
 {
-    initQ();
     //1) Creating accounts//
     add_account("kamal");
     add_account("kiran");
