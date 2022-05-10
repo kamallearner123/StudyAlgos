@@ -6,6 +6,7 @@
         "stdlib.h": "c",
         "string.h": "c",
         "typeinfo": "c",
-        "qstack.h": "c"
+        "qstack.h": "c",
+        "cstdlib": "c"
     }
 }

@@ -11,7 +11,7 @@ struct Queue {
 
 struct StackNode
 {
-    int data;
+    void *data;
     struct StackNode *next;
     struct StackNode *prev;
 };

@@ -1,4 +1,5 @@
 #include "trie.h"
+
 #define MAX_NUM_OF_TRIE 10
 struct node g_head;
 struct node *ga_head[MAX_NUM_OF_TRIE];
@@ -12,7 +13,8 @@ int init_trietree() {
     //Search for NULL entry//
     for (i=0; i<MAX_NUM_OF_TRIE; i++) {
         if (ga_head[i] == NULL) {
-            return gtop;
+            ga_head[i] = (struct node*)malloc(sizeof(struct node ));
+            return i;
         }
     }
 
@@ -21,6 +23,7 @@ int init_trietree() {
 
 void destroy_trietree(int index)
 {
+    free(ga_head[index]);
     ga_head[index] = NULL;
 }
 
@@ -35,12 +38,12 @@ void inc_ref_count(int index, char *name) {
 }
 
 
-int insert (char *iname) {
-    struct node *tmp = head;
+int insert (int index, char *iname) {
+    struct node *tmp = ga_head[index];
     char *name;
     name = iname;
 
-    if (search(name) != NULL) {
+    if (search(index, name) != NULL) {
         printf("%s: Name = %s : Duplicate insertion\n", __FUNCTION__, iname);
         return 0;
     }
@@ -62,8 +65,8 @@ int insert (char *iname) {
     return 0;
 }
 
-struct node * search(char *name) {
-    struct node *tmp = head;
+struct node * search(int index, char *name) {
+    struct node *tmp = ga_head[index];
     while (*name) {
         if (tmp == NULL) {
             return 0; //Breaking in between
@@ -96,7 +99,11 @@ void display_all(struct node *root) {
     }
 }
 
-void display_all_nodes(void) {
+void display_all_nodes(int index) {
+    if (ga_head[index] == NULL) {
+        return;
+    }
+    struct node *head = ga_head[index];
     display_all(head);
 }
 
@@ -110,12 +117,12 @@ static void delete_friends_list(struct node *account) {
 }
 
 
-int delete_node(char *iname) {
+int delete_node(int index, char *iname) {
     char *name = iname;
-    struct node *curr = head;
+    struct node *curr = ga_head[index];
     struct node *prev = NULL; 
 
-    if (search(name)==0) {
+    if (search(index, name)==0) {
         printf("%s: Name = %s : Failed to find\n", __FUNCTION__, iname);
         return 0;
     }
@@ -160,21 +167,20 @@ int delete_node(char *iname) {
 
 int test_trie()
 {
-    head = calloc(1, sizeof(struct node));
+    int id = init_trietree();
+    insert(id, "kamal");
+    insert(id,"kiran");
+    insert(id,"kamal");
+    insert(id,"kiran");
 
-    insert("kamal");
-    insert("kiran");
-    insert("kamal");
-    insert("kiran");
+    insert(id,"anil");
+    insert(id,"sunil");
 
-    insert("anil");
-    insert("sunil");
+    printf("Search result = %p\n", search(id,"kamal"));
+    printf("Search result = %p\n", search(id,"kishore"));
+    printf("Search result = %p\n", search(id,"kama"));
 
-    printf("Search result = %p\n", search("kamal"));
-    printf("Search result = %p\n", search("kishore"));
-    printf("Search result = %p\n", search("kama"));
-
-    display_all_nodes();
+    display_all_nodes(id);
     return 0;
 }
 

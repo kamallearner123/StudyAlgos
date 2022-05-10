@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdlib.h>
 
 
 #define NAME_SIZE 100
@@ -24,21 +25,21 @@ struct node {
     struct node *list[26];
 };
 
-erronum add_account (char *name);
+erronum add_account (int index, char *name);
 
-erronum delete_account (char *name) ;
+erronum delete_account (int index, char *name) ;
 
-erronum add_friend (char *name, char *friend);
+erronum add_friend (int index, char *name, char *friend);
 
-erronum find_friend (char *name, char *friend);
+erronum find_friend (int index, char *name, char *friend);
 
-erronum suggest_friend(char *name);
+erronum suggest_friend(int index, char *name);
 
-erronum delete_friend (char *name, char *friend);
+erronum delete_friend (int index, char *name, char *friend);
 
-erronum display_all_accounts (void);
+erronum display_all_accounts (int index);
 
-erronum serach_account(char *name);
+erronum serach_account(int index, char *name);
 
-erronum display_all_friends (char *name) ;
+erronum display_all_friends (int index, char *name) ;
 #endif

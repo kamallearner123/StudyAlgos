@@ -2,7 +2,7 @@
 
 #include "graph.h"
 #include "qstack.h"
-
+#include "trie.h"
 /*
 Endd application:
 Using graph.c/graph.h
@@ -11,29 +11,31 @@ Using graph.c/graph.h
 int main()
 {
     //1) Creating accounts//
-    add_account("kamal");
-    add_account("kiran");
-    add_account("ricky");
-    add_account("rinku");
-    add_account("Dhanada");
+    int id = init_trietree();
 
-    display_all_friends ("kamal");
-    add_friend("kamal", "kiran");
-    add_friend("kamal", "kiran");
-    add_friend("kamal", "kiran");
-    add_friend("kamal", "ricky");
-    add_friend("kamal", "rinku");
-    add_friend("kamal", "dhana");
-    add_friend("kamal", "dhana");
+    add_account(id, "kamal");
+    add_account(id, "kiran");
+    add_account(id, "ricky");
+    add_account(id, "rinku");
+    add_account(id, "Dhanada");
 
-    add_account("vamsi");
-    add_friend("vamsi","kamal");
-    add_friend("kamal","vamsi");
+    display_all_friends (id, "kamal");
+    add_friend(id, "kamal", "kiran");
+    add_friend(id, "kamal", "kiran");
+    add_friend(id, "kamal", "kiran");
+    add_friend(id, "kamal", "ricky");
+    add_friend(id, "kamal", "rinku");
+    add_friend(id, "kamal", "dhana");
+    add_friend(id, "kamal", "dhana");
 
-    suggest_friend("vamsi");
+    add_account(id, "vamsi");
+    add_friend(id, "vamsi","kamal");
+    add_friend(id, "kamal","vamsi");
+
+    suggest_friend(id, "vamsi");
 
 
-    display_all_friends ("kamal");
+    display_all_friends (id, "kamal");
 
 }
 

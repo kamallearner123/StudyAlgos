@@ -40,16 +40,16 @@
 // }
 
 
-erronum add_account (char *name) {
-    if (0 == insert(name))
+erronum add_account (int index, char *name) {
+    if (0 == insert(index, name))
         return GRAPH_SUCCESS;
     else 
         return GRAPH_FAIL;
 }
 
 
-erronum delete_account (char *name) {
-    delete_node(name);
+erronum delete_account (int index, char *name) {
+    delete_node(index, name);
     return GRAPH_SUCCESS;
 }
 
@@ -59,17 +59,17 @@ TODO:
 2) 'name' should be added to requesting friends likst in 'friend'
 3) 'friends' should be added to pending for acceptance list in 'name'
 */
-erronum add_friend (char *name, char *friend) {
+erronum add_friend (int index, char *name, char *friend) {
     int offset = 0;
     //Get account using name
     struct node *entry, *friend_entry;
-    entry = search(name);
+    entry = search(index, name);
     if (NULL==entry) {
         return GRAPH_FAIL;
     }
 
     // Check friend and add name.
-    friend_entry = search(friend);
+    friend_entry = search(index, friend);
     if (NULL==friend_entry) {
         return GRAPH_FAIL;
     }
@@ -92,10 +92,10 @@ erronum add_friend (char *name, char *friend) {
 }
 
 
-erronum find_friend (char *name, char *friend) {
+erronum find_friend (int index, char *name, char *friend) {
 
-    struct node *entry, *friend_entry;
-    entry = search(name);
+    struct node *entry;
+    entry = search(index, name);
     if (NULL==entry) {
         printf("Account is not existing\n");
         return GRAPH_FAIL;
@@ -114,6 +114,7 @@ erronum find_friend (char *name, char *friend) {
         
         // Check entry in traversed list
             // if yes, coninue
+            
         // Make entry in traversed list
            //
         // Check: node->name == friend //
@@ -135,10 +136,10 @@ erronum find_friend (char *name, char *friend) {
 //     //5) call handleQ(name);
 // }
 
-erronum suggest_friend(char *name) {
+erronum suggest_friend(int index, char *name) {
     //Get account using name
-    struct node *entry, *friend_entry;
-    entry = search(name);
+    struct node *entry;
+    entry = search(index, name);
     if (NULL==entry) {
         printf("Account is not existing\n");
         return GRAPH_FAIL;
@@ -152,19 +153,19 @@ erronum suggest_friend(char *name) {
     return GRAPH_SUCCESS;
 }
 
-erronum delete_friend (char *name, char *friend) {
+erronum delete_friend (int index, char *name, char *friend) {
     return GRAPH_SUCCESS;
 }
 
-erronum display_all_accounts (void) {
-    display_all_nodes();
+erronum display_all_accounts (int index) {
+    display_all_nodes(index);
     return GRAPH_SUCCESS;
 }
 
-erronum display_all_friends (char *name) {
+erronum display_all_friends (int index, char *name) {
         //Get account using name
     struct node *entry;
-    entry = search(name);
+    entry = search(index, name);
     if (NULL==entry) {
         return GRAPH_FAIL;
     }
@@ -179,9 +180,9 @@ erronum display_all_friends (char *name) {
 }
 
 
-erronum serach_account(char *name) {
+erronum serach_account(int index,char *name) {
     struct node *entry;
-    entry = search(name);
+    entry = search(index, name);
     if (NULL==entry) {
         return GRAPH_FAIL;
     } else {

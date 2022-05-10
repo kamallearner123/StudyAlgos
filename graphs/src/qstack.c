@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "qstack.h"
 
 /*
@@ -101,7 +102,7 @@ void insertInStack(void *data)
 
 int* popFromStack()
 {
-   int* data;
+   void* data = NULL;
    struct StackNode *tmp;
    if(top == NULL)
      {
